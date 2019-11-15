@@ -113,7 +113,7 @@ std::vector<torch::Tensor> lltm_cuda_forward(
   auto output_gate = torch::zeros_like(old_cell);
   auto candidate_cell = torch::zeros_like(old_cell);
 
-  const int threads = 1024;
+  const int threads = 128;
   const dim3 blocks((state_size + threads - 1) / threads, batch_size);
 
   AT_DISPATCH_FLOATING_TYPES(gates.type(), "lltm_forward_cuda", ([&] {
