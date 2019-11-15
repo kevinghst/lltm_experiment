@@ -45,7 +45,7 @@ rnn = LLTM(options.features, options.state_size).to(device, dtype)
 
 # Force CUDA initialization
 new_h, new_C = rnn(X, (h, C))
-(new_h.sum() + new_C.sum()).backward()
+# (new_h.sum() + new_C.sum()).backward()
 
 forward_min = math.inf
 forward_time = 0
@@ -60,11 +60,11 @@ for _ in range(options.runs):
     forward_min = min(forward_min, elapsed)
     forward_time += elapsed
 
-    start = time.time()
-    (new_h.sum() + new_C.sum()).backward()
-    elapsed = time.time() - start
-    backward_min = min(backward_min, elapsed)
-    backward_time += elapsed
+    # start = time.time()
+    # (new_h.sum() + new_C.sum()).backward()
+    # elapsed = time.time() - start
+    # backward_min = min(backward_min, elapsed)
+    # backward_time += elapsed
 
 scale = TIME_SCALES[options.scale]
 forward_min *= scale
