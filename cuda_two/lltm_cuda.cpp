@@ -2,6 +2,9 @@
 
 #include <vector>
 
+#include <iostream>
+#include <string.h>
+
 // CUDA forward declarations
 
 std::vector<torch::Tensor> lltm_cuda_forward(
@@ -40,6 +43,8 @@ std::vector<torch::Tensor> lltm_forward(
   CHECK_INPUT(bias);
   CHECK_INPUT(old_h);
   CHECK_INPUT(old_cell);
+
+  std::cout << "wtf" << std::endl;
 
   return lltm_cuda_forward(input, weights, bias, old_h, old_cell);
 }
