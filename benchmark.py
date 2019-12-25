@@ -12,7 +12,7 @@ import torch
 TIME_SCALES = {'s': 1, 'ms': 1000, 'us': 1000000}
 
 parser = argparse.ArgumentParser()
-parser.add_argument('example', choices=['py', 'cpp', 'cuda', 'py_baseline'])
+parser.add_argument('example', choices=['py', 'cpp', 'cuda', 'py_baseline', 'cuda_two'])
 parser.add_argument('-b', '--batch-size', type=int, default=128)
 parser.add_argument('-f', '--features', type=int, default=32)
 parser.add_argument('-s', '--state-size', type=int, default=128)
@@ -28,8 +28,11 @@ elif options.example == 'py_baseline':
     from python.lltm_baseline import LLTM
 elif options.example == 'cpp':
     from cpp.lltm import LLTM
-else:
+elif options.example == 'cuda':
     from cuda.lltm import LLTM
+    options.cuda = True
+elif options.example == 'cuda_two':
+    from cuda_two.lltm import LLTM
     options.cuda = True
 
 device = torch.device("cuda") if options.cuda else torch.device("cpu")
