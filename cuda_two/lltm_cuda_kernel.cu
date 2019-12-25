@@ -1,9 +1,14 @@
 #include <torch/extension.h>
 
+#include <ATen/ATen.h>
+#include <ATen/cuda/CUDAContext.h>
 #include <cuda.h>
 #include <cuda_runtime.h>
 
 #include <vector>
+
+#include <iostream>
+#include <string.h>
 
 namespace {
 template <typename scalar_t>
@@ -100,6 +105,19 @@ std::vector<torch::Tensor> lltm_cuda_forward(
     torch::Tensor bias,
     torch::Tensor old_h,
     torch::Tensor old_cell) {
+
+  cudaSetDevice(input.get_device());
+  std::cout << input.get_device() << std::endl;
+  std::cout << weights.get_device() << std::endl;
+  std::cout << bias.get_device() << std::endl;
+  std::cout << old_h.get_device() << std::endl;
+  std::cout << old_cell.get_device() << std::endl;
+  std::cout << "over" << std::endl;
+
+
+
+
+
   auto X = torch::cat({old_h, input}, /*dim=*/1);
   auto gate_weights = torch::addmm(bias, X, weights.transpose(0, 1));
 
